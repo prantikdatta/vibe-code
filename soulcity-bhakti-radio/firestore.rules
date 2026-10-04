@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.admin == true ||
+        request.auth.token.email == "prantikd54848@gmail.com"
+      );
+    }
+
+    // Official Community Tracks Collection
+    match /tracks/{trackId} {
+      // Public users can read approved tracks
+      allow read: if true;
+      // Only authorized administrators can create, modify, or delete official tracks
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Public Song Suggestions Collection
+    match /songSubmissions/{submissionId} {
+      // Users can read their own submission or admins can review all submissions
+      allow read: if isAdmin() || (isSignedIn() && resource.data.submittedByUid == request.auth.uid);
+      
+      // Public users can submit songs with status 'pending'
+      allow create: if request.resource.data.status == 'pending'
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 200;
+
+      // Only admins can approve, reject, modify, or delete song submissions
+      allow update, delete: if isAdmin();
+    }
+
+    // Navratri Calendar & Theme Settings
+    match /navratriSettings/{configId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Authorized Admin Accounts Registry
+    match /admins/{uid} {
+      allow read: if isSignedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if false;
+    }
+  }
+}

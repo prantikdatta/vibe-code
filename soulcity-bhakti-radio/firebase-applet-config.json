@@ -1,0 +1,12 @@
+{
+  "projectId": "tactical-complex-ms7sz",
+  "appId": "1:527169141189:web:d7492e27576a6f7ed073ac",
+  "apiKey": "<your_api_key>",
+  "authDomain": "tactical-complex-ms7sz.firebaseapp.com",
+  "firestoreDatabaseId": "<your_db_id>",
+  "storageBucket": "tactical-complex-ms7sz.firebasestorage.app",
+  "messagingSenderId": "<your_id>",
+  "measurementId": "",
+  "oAuthClientId": "your_id-afssafffafsapps.googleusercontent.com",
+  "recaptchaSiteKey": ""
+}
