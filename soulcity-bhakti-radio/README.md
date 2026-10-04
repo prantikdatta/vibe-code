@@ -2,6 +2,8 @@
 
 SoulCity Bhakti Radio is a devotional radio web application built for GTA RP communities.
 
+Live Link : https://soulcity-bhakti-radio.ai.studio/
+
 The idea is simple: open the radio, press play, and let Aarti, Bhajan and Mantra continue in the background while performing Aarti or spending time in the mandir.
 
 Built as an AI assisted application using Google AI Studio Build Mode and refined around a React, TypeScript, Express and Firebase stack.
